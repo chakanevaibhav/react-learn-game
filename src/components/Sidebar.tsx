@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </span>
         </div>
         
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1, marginLeft: '24px' }}>
           <button onClick={onPrev} disabled={currentLevel === 0} title="Previous Level" style={{ padding: '6px 10px', fontSize: '0.9rem' }}>
             <ChevronLeft size={16} />
           </button>
@@ -61,7 +61,12 @@ const Sidebar: React.FC<SidebarProps> = ({
             style={{ 
               background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-primary)', 
               padding: '8px', borderRadius: '6px', outline: 'none', fontFamily: 'var(--font-mono)', fontSize: '0.9rem',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              flex: 1,
+              width: '100%',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden'
             }}
           >
             {levels.map((l, idx) => (
@@ -85,12 +90,12 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="glass-panel" style={{ padding: '24px', borderRadius: '16px', marginBottom: '40px', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'var(--neon-cyan)', boxShadow: '0 0 10px var(--neon-cyan)' }} />
           <h3 className="text-muted font-display" style={{ fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '12px' }}>Directive</h3>
-          <p style={{ lineHeight: 1.8, fontSize: '1.05rem' }} dangerouslySetInnerHTML={{ __html: level.instructions.replace(/`([^`]+)`/g, '<span style="color: var(--neon-cyan); font-family: var(--font-mono); font-size: 0.95rem; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(34, 211, 238, 0.2)">$1</span>') }} />
+          <p style={{ lineHeight: 1.8, fontSize: '1.05rem' }} dangerouslySetInnerHTML={{ __html: level.instructions.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/`([^`]+)`/g, '<span style="color: var(--neon-cyan); font-family: var(--font-mono); font-size: 0.95rem; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(34, 211, 238, 0.2)">$1</span>') }} />
         </div>
 
         <div className="code-block" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginTop: '16px', marginBottom: '8px' }}>
-            <span className="token-punctuation" style={{ fontSize: '1.15rem' }}>{level.initialCodePre}</span>
+          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginTop: '20px', marginBottom: '8px', fontFamily: 'var(--font-mono)' }}>
+            <span className="token-punctuation" style={{ fontSize: '1.25rem', marginTop: '2px' }}>{level.initialCodePre}</span>
             <input 
               type="text"
               value={userInput}
@@ -98,15 +103,17 @@ const Sidebar: React.FC<SidebarProps> = ({
               placeholder="..."
               style={{
                 width: '180px',
-                fontSize: '1.15rem',
-                borderColor: isCorrect ? 'var(--neon-green)' : undefined,
+                fontSize: '1.25rem',
+                padding: '6px 12px',
+                borderColor: isCorrect ? 'var(--neon-green)' : 'rgba(34, 211, 238, 0.3)',
                 boxShadow: isCorrect ? '0 0 15px rgba(16,185,129,0.3)' : undefined,
                 color: isCorrect ? 'var(--neon-green)' : 'var(--neon-cyan)',
-                backgroundColor: isCorrect ? 'rgba(16,185,129,0.1)' : undefined
+                backgroundColor: isCorrect ? 'rgba(16,185,129,0.1)' : 'rgba(0,0,0,0.5)',
+                outline: 'none',
               }}
               autoFocus
             />
-            <span className="token-punctuation" style={{ fontSize: '1.15rem' }}>{level.initialCodePost}</span>
+            <span className="token-punctuation" style={{ fontSize: '1.25rem', marginTop: '2px' }}>{level.initialCodePost}</span>
           </div>
         </div>
 
